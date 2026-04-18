@@ -548,7 +548,7 @@ export const Home = () => {
           </div>
           <div className="pt-8 border-t border-border text-center text-sm text-muted-foreground">
             <p>
-              &copy; {new Date().getFullYear()} KPOL. Все права защищены.
+              &copy; 2026 KPOL. Все права защищены.
             </p>
           </div>
         </div>
