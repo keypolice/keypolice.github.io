@@ -129,7 +129,7 @@ export const Home = () => {
               variants={fadeIn}
               className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground mb-6 leading-tight">
               
-              Фриланс KPOL на базе{' '}
+              Фриланс биржа на базе{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/60">
                 открытого кода
               </span>
