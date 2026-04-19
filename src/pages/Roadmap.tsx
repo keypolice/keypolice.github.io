@@ -172,66 +172,6 @@ export const Roadmap = () => {
           </motion.div>
         </section>
 
-        {/* Timeline Section */}
-        <section className="py-24 px-4 bg-muted/30 border-y border-border/40">
-          <div className="container mx-auto max-w-5xl">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
-                Этапы развития
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Ключевые вехи на пути к созданию идеальной платформы для разработчиков
-              </p>
-            </div>
-
-            <div className="relative">
-              {/* Вертикальная линия таймлайна */}
-              <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-border transform -translate-x-1/2 hidden md:block"></div>
-
-              {timelineEvents.map((event, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.2, duration: 0.5 }}
-                  className={`relative flex flex-col md:flex-row gap-8 mb-16 last:mb-0 ${
-                    index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-                  }`}>
-                  
-                  {/* Точка на линии */}
-                  <div className="absolute left-4 md:left-1/2 top-6 w-3 h-3 rounded-full bg-primary transform -translate-x-1/2 z-10 hidden md:block"></div>
-                  
-                  {/* Карточка события */}
-                  <div className="flex-1 md:w-1/2 pl-12 md:pl-0">
-                    <div className="bg-card rounded-2xl border border-border p-6 shadow-lg hover:shadow-xl transition-all">
-                      <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium mb-4 ${event.color}`}>
-                        <event.icon className="w-4 h-4" />
-                        <span>{event.period}</span>
-                      </div>
-                      <h3 className="text-2xl font-bold mb-3 text-foreground">{event.title}</h3>
-                      <p className="text-muted-foreground leading-relaxed">{event.description}</p>
-                      <div className="mt-4 flex items-center gap-2 text-sm">
-                        <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
-                          event.status === 'completed' ? 'bg-green-500/20 text-green-500' :
-                          event.status === 'in-progress' ? 'bg-blue-500/20 text-blue-500' :
-                          'bg-yellow-500/20 text-yellow-500'
-                        }`}>
-                          {event.status === 'completed' ? '✅ Завершено' :
-                           event.status === 'in-progress' ? '🔄 В работе' : '📅 Запланировано'}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Пустое место для выравнивания */}
-                  <div className="flex-1 hidden md:block"></div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* Ожидаемые результаты через год */}
         <section className="py-24 px-4">
           <div className="container mx-auto max-w-6xl">
