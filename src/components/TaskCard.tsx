@@ -36,7 +36,7 @@ export const TaskCard = ({ task }: TaskCardProps) => {
         </h3>
         <div className="flex flex-col items-end shrink-0 ml-4">
           <span className="text-lg font-bold text-green-600 dark:text-green-500 whitespace-nowrap">
-            {meta.budget}
+            ₽ {meta.budget}
           </span>
         </div>
       </div>
