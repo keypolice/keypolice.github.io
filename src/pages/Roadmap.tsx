@@ -21,7 +21,8 @@ import {
   DollarSign,
   Github,
   ArrowRight,
-  Sparkles
+  Sparkles,
+  RussianRuble
 } from 'lucide-react';
 
 const fadeIn = {
@@ -85,7 +86,7 @@ const yearTargets = [
   {
     metric: '0% комиссии',
     description: 'Бесплатная платформа. SaaS для агентств. Децентрализованная разработка для разработчиков',
-    icon: DollarSign,
+    icon: RussianRuble,
     color: 'bg-yellow-500/10 text-yellow-500'
   },
   {
