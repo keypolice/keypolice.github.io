@@ -322,6 +322,7 @@ export const Roadmap = () => {
             </div>
           </div>
         </section>
+      </main>
     </div>);
 
 };
