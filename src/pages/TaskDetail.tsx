@@ -179,7 +179,7 @@ export const TaskDetail = () => {
                   Бюджет
                 </span>
                 <span className="font-bold text-green-600 dark:text-green-500 text-sm md:text-base">
-                  {meta.budget}
+                  ₽ {meta.budget}
                 </span>
               </div>
               <div>
