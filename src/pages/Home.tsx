@@ -517,7 +517,7 @@ export const Home = () => {
                   </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-primary transition-colors">
+                  <a href="/roadmap" className="hover:text-primary transition-colors">
                     Как это работает
                   </a>
                 </li>
