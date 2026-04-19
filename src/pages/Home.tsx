@@ -526,7 +526,7 @@ export const Home = () => {
                 </li>
               </ul>
             </div>
-            <div className="hide">
+            <div className="hidden">
               <h4 className="font-semibold mb-4 text-foreground">
                 Правовая информация
               </h4>
