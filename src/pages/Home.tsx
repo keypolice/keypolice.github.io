@@ -526,7 +526,7 @@ export const Home = () => {
                 </li>
               </ul>
             </div>
-            {{<div>
+            <div className="hide">
               <h4 className="font-semibold mb-4 text-foreground">
                 Правовая информация
               </h4>
@@ -547,7 +547,7 @@ export const Home = () => {
                   </a>
                 </li>
               </ul>
-            </div>}}
+            </div>
           </div>
           <div className="pt-8 border-t border-border text-center text-sm text-muted-foreground">
             <p>
