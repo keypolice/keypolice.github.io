@@ -165,7 +165,7 @@ export const Roadmap = () => {
               <Link
                 to="/tasks"
                 className="inline-flex items-center justify-center px-8 py-4 text-base font-medium text-primary-foreground bg-primary rounded-xl hover:bg-primary/90 transition-all shadow-lg hover:shadow-primary/25 group">
-                Посмотреть текущие задачи
+                Посмотреть задачи
                 <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
               </Link>
             </motion.div>
