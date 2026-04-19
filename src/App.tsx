@@ -11,7 +11,7 @@ import { Home } from './pages/Home';
 import { Login } from './pages/Login';
 import { Profile } from './pages/Profile';
 import { Tasks } from './pages/Tasks';
-import { Roadmap } from './pages/Roadmap';
+import Roadmap from './pages/Roadmap';
 import { TaskDetail } from './pages/TaskDetail';
 import { AdminPanel } from './pages/AdminPanel';
 export function App() {
