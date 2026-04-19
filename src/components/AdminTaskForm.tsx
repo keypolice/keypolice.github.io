@@ -11,7 +11,8 @@ const CATEGORIES = [
 'SEO и трафик',
 'Соцсети и маркетинг',
 'Аудио, видео, съемка',
-'Бизнес и жизнь'];
+'Бизнес и жизнь',
+'Развлечение и шоу'];
 
 export const AdminTaskForm = ({ onSuccess }: {onSuccess?: () => void;}) => {
   const { user } = useAuth();
