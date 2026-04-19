@@ -288,7 +288,7 @@ export const Profile = () => {
             </a>
 
             <a
-              href="#"
+              href="https://dsgners.ru/golfui/42195-kpol-open-source-frilans-birja-dlya-zadach"
               className="flex items-center gap-3 p-4 rounded-lg border border-border bg-background hover:bg-muted/50 transition-colors group">
               
               <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center shrink-0">
