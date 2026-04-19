@@ -516,10 +516,13 @@ export const Home = () => {
                     Регистрация
                   </Link>
                 </li>
-                <li>
-                  <a href="/roadmap" className="hover:text-primary transition-colors">
+                 <li>
+                  <Link
+                    to="/roadmap"
+                    className="hover:text-primary transition-colors">
+                    
                     Как это работает
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
