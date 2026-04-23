@@ -373,7 +373,7 @@ export const ProjectDetail = () => {
           {/* Close button */}
           <button
             onClick={closeLightbox}
-            className="absolute top-34 right-4 z-10 p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
+            className="absolute top-4 right-4 z-10 p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
           >
             <X className="w-6 h-6" />
           </button>
@@ -415,7 +415,7 @@ export const ProjectDetail = () => {
       )}
 
       {/* Back Button (Mobile Sticky) */}
-      <div className="lg:hidden fixed top-34 left-4 right-4 z-40">
+      <div className="lg:hidden fixed top-12 left-4 right-4 z-40">
         <button
           onClick={() => navigate(-1)}
           className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-card border border-border rounded-xl shadow-lg hover:bg-secondary/30 transition-colors font-medium"
