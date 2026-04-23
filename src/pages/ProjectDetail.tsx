@@ -415,7 +415,7 @@ export const ProjectDetail = () => {
       )}
 
       {/* Back Button (Mobile Sticky) */}
-      <div className="lg:hidden fixed bottom-4 left-4 right-4 z-40">
+      <div className="lg:hidden fixed top-4 left-4 right-4 z-40">
         <button
           onClick={() => navigate(-1)}
           className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-card border border-border rounded-xl shadow-lg hover:bg-secondary/30 transition-colors font-medium"
