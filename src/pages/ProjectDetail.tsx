@@ -327,7 +327,7 @@ export const ProjectDetail = () => {
                   )}
                 </div>
 
-                <div className="flex gap-2 pt-2 border-t border-border">
+                <div className="flex gap-2 pt-2 border-t border-border hidden">
                   <button className="flex-1 flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium rounded-lg border border-border hover:bg-secondary/50 transition-colors">
                     <Share2 className="w-4 h-4" />
                     Поделиться
