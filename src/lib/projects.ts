@@ -570,7 +570,7 @@ export const filterProjects = (
         a.meta.title.localeCompare(b.meta.title, 'ru')
       );
       break;
-    case 'priority':
+    case 'priority': {
       const order = { high: 0, medium: 1, low: 2 };
       result.sort(
         (a, b) =>
@@ -578,6 +578,7 @@ export const filterProjects = (
           (order[b.meta.priority || 'low'] ?? 3)
       );
       break;
+    }
     case 'newest':
     default:
       result.sort(

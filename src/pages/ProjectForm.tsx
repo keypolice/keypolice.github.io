@@ -16,9 +16,6 @@ import {
   Tag as TagIcon,
   Users,
   Code,
-  Calendar,
-  DollarSign,
-  Clock,
   AlertCircle
 } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
@@ -69,7 +66,6 @@ export const ProjectForm = () => {
   
   const { user } = useAuth();
   const { 
-    projects, 
     getProjectById, 
     createNewProject, 
     updateExistingProject,
@@ -99,10 +95,9 @@ export const ProjectForm = () => {
       return;
     }
 
-    if (isEditMode && id) {
       const project = getProjectById(id);
       if (project) {
-        const { id: _, createdAt, updatedAt, ...meta } = project.meta;
+        const { createdAt, updatedAt, ...meta } = project.meta;
         setFormData({
           ...meta,
           content: project.content,
@@ -112,7 +107,6 @@ export const ProjectForm = () => {
           techStack: project.meta.techStack || [],
         });
       }
-    }
   }, [id, isEditMode, user, navigate, getProjectById]);
 
   // ─────────────────────────────────────────────────────────

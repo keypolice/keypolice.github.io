@@ -13,7 +13,11 @@ import {
   User,
   ChevronRight,
   Share2,
-  Bookmark
+  Bookmark,
+  DollarSign,
+  AlertCircle,
+  Code,
+  Users
 } from 'lucide-react';
 
 export const ProjectDetail = () => {
@@ -62,7 +66,13 @@ export const ProjectDetail = () => {
     );
   }
 
-  const { meta, content, images = [] } = project;
+  const { meta, content } = project;
+
+  // Normalize arrays
+  const images = Array.isArray(meta.images) ? meta.images : meta.images ? [meta.images] : [];
+  const tags = Array.isArray(meta.tags) ? meta.tags : meta.tags ? [meta.tags] : [];
+  const collaborators = Array.isArray(meta.collaborators) ? meta.collaborators : meta.collaborators ? [meta.collaborators] : [];
+  const techStack = Array.isArray(meta.techStack) ? meta.techStack : meta.techStack ? [meta.techStack] : [];
 
   return (
     <div className="min-h-screen bg-background">
@@ -119,6 +129,9 @@ export const ProjectDetail = () => {
                   { icon: Clock, label: 'Обновлён', value: new Date(meta.updatedAt).toLocaleDateString('ru-RU') },
                   { icon: Tag, label: 'Категория', value: meta.category },
                   { icon: User, label: 'Автор', value: meta.author || 'KPOL Team' },
+                  ...(meta.budget ? [{ icon: DollarSign, label: 'Бюджет', value: meta.budget }] : []),
+                  ...(meta.deadline ? [{ icon: Clock, label: 'Дедлайн', value: new Date(meta.deadline).toLocaleDateString('ru-RU') }] : []),
+                  ...(meta.priority ? [{ icon: AlertCircle, label: 'Приоритет', value: meta.priority === 'high' ? 'Высокий' : meta.priority === 'medium' ? 'Средний' : 'Низкий' }] : []),
                 ].map((stat, i) => (
                   <div key={i} className="p-4 rounded-xl bg-card border border-border">
                     <stat.icon className="w-4 h-4 text-muted-foreground mb-2" />
@@ -136,9 +149,9 @@ export const ProjectDetail = () => {
               </article>
 
               {/* Tags */}
-              {meta.tags?.length > 0 && (
+              {tags.length > 0 && (
                 <div className="flex flex-wrap gap-2 pt-4 border-t border-border">
-                  {meta.tags.map((tag: string) => (
+                  {tags.map((tag: string) => (
                     <span 
                       key={tag}
                       className="px-3 py-1.5 text-xs font-medium rounded-lg bg-secondary/50 text-secondary-foreground border border-border hover:bg-secondary transition-colors cursor-pointer"
@@ -148,18 +161,91 @@ export const ProjectDetail = () => {
                   ))}
                 </div>
               )}
+
+              {/* Tech Stack */}
+              {techStack.length > 0 && (
+                <div className="pt-4 border-t border-border">
+                  <h3 className="font-semibold text-sm mb-3 flex items-center gap-2">
+                    <Code className="w-4 h-4 text-muted-foreground" />
+                    Технологии
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {techStack.map((tech: string) => (
+                      <span 
+                        key={tech}
+                        className="px-3 py-1.5 text-xs font-medium rounded-lg bg-primary/10 text-primary border border-primary/20"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Collaborators */}
+              {collaborators.length > 0 && (
+                <div className="pt-4 border-t border-border">
+                  <h3 className="font-semibold text-sm mb-3 flex items-center gap-2">
+                    <Users className="w-4 h-4 text-muted-foreground" />
+                    Коллабораторы
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {collaborators.map((collab: string) => (
+                      <span 
+                        key={collab}
+                        className="px-3 py-1.5 text-xs font-medium rounded-lg bg-secondary/50 text-secondary-foreground border border-border"
+                      >
+                        @{collab}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Sidebar */}
             <div className="space-y-6">
-              {/* Project Image */}
-              {images[0] && (
-                <div className="rounded-xl overflow-hidden border border-border bg-muted/30">
+              {/* Author Avatar */}
+              {meta.authorAvatar && (
+                <div className="flex items-center gap-3 p-4 rounded-xl bg-card border border-border">
                   <img 
-                    src={images[0]} 
-                    alt={meta.title}
-                    className="w-full aspect-video object-cover"
+                    src={meta.authorAvatar} 
+                    alt={meta.author || 'Автор'}
+                    className="w-12 h-12 rounded-full border border-border"
                   />
+                  <div>
+                    <p className="font-medium text-sm">{meta.author || 'Автор'}</p>
+                    <p className="text-xs text-muted-foreground">Создатель проекта</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Project Images */}
+              {images.length > 0 && (
+                <div className="space-y-3">
+                  {/* Main Image */}
+                  <div className="rounded-xl overflow-hidden border border-border bg-muted/30">
+                    <img 
+                      src={images[0]} 
+                      alt={meta.title}
+                      className="w-full aspect-video object-cover"
+                    />
+                  </div>
+                  
+                  {/* Additional Images */}
+                  {images.length > 1 && (
+                    <div className="grid grid-cols-2 gap-2">
+                      {images.slice(1, 5).map((img, idx) => (
+                        <div key={idx} className="rounded-lg overflow-hidden border border-border bg-muted/30">
+                          <img 
+                            src={img} 
+                            alt={`${meta.title} ${idx + 2}`}
+                            className="w-full aspect-square object-cover"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
 
