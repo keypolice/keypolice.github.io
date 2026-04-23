@@ -16,6 +16,9 @@ import {
   Tag as TagIcon,
   Users,
   Code,
+  Calendar,
+  DollarSign,
+  Clock,
   AlertCircle
 } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
