@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useProjects } from '../store/projectStore';
 import { Navbar } from '../components/Navbar';
@@ -17,7 +17,10 @@ import {
   DollarSign,
   AlertCircle,
   Code,
-  Users
+  Users,
+  X,
+  ChevronLeft,
+  ChevronRight as ChevronRightIcon
 } from 'lucide-react';
 
 export const ProjectDetail = () => {
@@ -25,7 +28,51 @@ export const ProjectDetail = () => {
   const navigate = useNavigate();
   const { projects, isLoading } = useProjects();
   
+  // Lightbox state
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+  
   const project = projects.find(p => p.meta.id === id);
+
+  // Lightbox handlers
+  const openLightbox = (index: number) => {
+    setLightboxIndex(index);
+    setLightboxOpen(true);
+  };
+
+  const closeLightbox = () => {
+    setLightboxOpen(false);
+  };
+
+  const nextImage = () => {
+    setLightboxIndex((prev) => (prev + 1) % images.length);
+  };
+
+  const prevImage = () => {
+    setLightboxIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
+
+  // Keyboard navigation for lightbox
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!lightboxOpen) return;
+      
+      switch (e.key) {
+        case 'Escape':
+          closeLightbox();
+          break;
+        case 'ArrowLeft':
+          prevImage();
+          break;
+        case 'ArrowRight':
+          nextImage();
+          break;
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [lightboxOpen, images.length]);
 
   if (isLoading) {
     return (
@@ -224,11 +271,12 @@ export const ProjectDetail = () => {
               {images.length > 0 && (
                 <div className="space-y-3">
                   {/* Main Image */}
-                  <div className="rounded-xl overflow-hidden border border-border bg-muted/30">
+                  <div className="rounded-xl overflow-hidden border border-border bg-muted/30 cursor-pointer hover:opacity-90 transition-opacity">
                     <img 
                       src={images[0]} 
                       alt={meta.title}
                       className="w-full aspect-video object-cover"
+                      onClick={() => openLightbox(0)}
                     />
                   </div>
                   
@@ -236,11 +284,12 @@ export const ProjectDetail = () => {
                   {images.length > 1 && (
                     <div className="grid grid-cols-2 gap-2">
                       {images.slice(1, 5).map((img, idx) => (
-                        <div key={idx} className="rounded-lg overflow-hidden border border-border bg-muted/30">
+                        <div key={idx} className="rounded-lg overflow-hidden border border-border bg-muted/30 cursor-pointer hover:opacity-90 transition-opacity">
                           <img 
                             src={img} 
                             alt={`${meta.title} ${idx + 2}`}
                             className="w-full aspect-square object-cover"
+                            onClick={() => openLightbox(idx + 1)}
                           />
                         </div>
                       ))}
@@ -318,6 +367,53 @@ export const ProjectDetail = () => {
           </div>
         </div>
       </section>
+
+      {/* Lightbox */}
+      {lightboxOpen && images.length > 0 && (
+        <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center">
+          {/* Close button */}
+          <button
+            onClick={closeLightbox}
+            className="absolute top-4 right-4 z-10 p-2 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
+          >
+            <X className="w-6 h-6" />
+          </button>
+
+          {/* Navigation buttons */}
+          {images.length > 1 && (
+            <>
+              <button
+                onClick={prevImage}
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              <button
+                onClick={nextImage}
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-3 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors"
+              >
+                <ChevronRightIcon className="w-6 h-6" />
+              </button>
+            </>
+          )}
+
+          {/* Image counter */}
+          {images.length > 1 && (
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 px-3 py-1 rounded-full bg-black/50 text-white text-sm">
+              {lightboxIndex + 1} / {images.length}
+            </div>
+          )}
+
+          {/* Main image */}
+          <div className="max-w-[90vw] max-h-[90vh] relative">
+            <img
+              src={images[lightboxIndex]}
+              alt={`${meta.title} ${lightboxIndex + 1}`}
+              className="max-w-full max-h-full object-contain"
+            />
+          </div>
+        </div>
+      )}
 
       {/* Back Button (Mobile Sticky) */}
       <div className="lg:hidden fixed bottom-4 left-4 right-4 z-40">
