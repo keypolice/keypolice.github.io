@@ -10,6 +10,7 @@ import {
   Briefcase,
   Shield,
   Home,
+  Images,
   LogIn } from
 'lucide-react';
 export const Navbar = () => {
@@ -27,6 +28,11 @@ export const Navbar = () => {
     to: '/tasks',
     label: 'Проекты',
     icon: Briefcase
+  },
+  {
+    to: '/projects',
+    label: 'Галерея',
+    icon: Images
   },
   ...(isAdmin ?
   [
