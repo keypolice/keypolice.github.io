@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { useTasks } from '../store/taskStore';
+import { useProjects } from '../store/projectStore';
 import { Navbar } from '../components/Navbar';
 import { TaskCard } from '../components/TaskCard';
 import { 
@@ -19,9 +19,9 @@ import {
 export const ProjectDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { tasks, isLoading } = useTasks();
+  const { projects, isLoading } = useProjects();
   
-  const project = tasks.find(t => t.meta.id === id);
+  const project = projects.find(p => p.meta.id === id);
 
   if (isLoading) {
     return (
@@ -209,8 +209,8 @@ export const ProjectDetail = () => {
               <div className="p-5 rounded-xl bg-card border border-border">
                 <h3 className="font-semibold mb-4">Похожие проекты</h3>
                 <div className="space-y-3">
-                  {tasks
-                    .filter(t => t.meta.id !== id && t.meta.category === meta.category)
+                  {projects
+                    .filter(p => p.meta.id !== id && p.meta.category === meta.category)
                     .slice(0, 3)
                     .map(related => (
                       <Link

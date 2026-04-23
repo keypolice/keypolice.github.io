@@ -1,5 +1,5 @@
 // src/components/ProjectCard.tsx
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { Project } from '../store/projectStore';
 import { Calendar, Tag, ExternalLink, Github, ArrowRight } from 'lucide-react';
@@ -9,7 +9,7 @@ interface ProjectCardProps {
   className?: string;
 }
 
-export const ProjectCard = ({ project, className = '' }: ProjectCardProps) => {
+export const ProjectCard = memo(({ project, className = '' }: ProjectCardProps) => {
   const { meta } = project;
   
   // 🔹 Статус бейджи
@@ -141,4 +141,4 @@ export const ProjectCard = ({ project, className = '' }: ProjectCardProps) => {
       </div>
     </article>
   );
-};
+});

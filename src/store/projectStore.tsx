@@ -8,44 +8,15 @@ import React, {
   } from 'react';
   
   // ─────────────────────────────────────────────────────────────
-  // 🔷 Типы данных
+  // 🔷 Типы данных (импортируем из lib)
   // ─────────────────────────────────────────────────────────────
   
-  export interface ProjectMeta {
-    id: string;
-    title: string;
-    description: string;
-    category: string;
-    status: 'completed' | 'in-progress' | 'pending' | 'archived';
-    author?: string;
-    authorAvatar?: string;
-    createdAt: string;
-    updatedAt: string;
-    tags?: string[];
-    githubUrl?: string;
-    liveUrl?: string;
-    budget?: string;
-    deadline?: string;
-    priority?: 'low' | 'medium' | 'high';
-    images?: string[];
-    thumbnail?: string;
-  }
+  import type { Project, ProjectFrontmatter } from '../lib/projects';
   
-  export interface Project {
-    meta: ProjectMeta;
-    content: string; // Markdown или HTML контент
-    sections?: Array<{
-      title: string;
-      content: string;
-      type?: 'text' | 'code' | 'image' | 'list';
-    }>;
-    attachments?: Array<{
-      name: string;
-      url: string;
-      type: string;
-      size?: number;
-    }>;
-  }
+  export type { Project, ProjectFrontmatter };
+  
+  // Для обратной совместимости
+  export interface ProjectMeta extends ProjectFrontmatter {}
   
   export interface ProjectFilters {
     categories: string[];
@@ -57,55 +28,23 @@ import React, {
   }
   
   // ─────────────────────────────────────────────────────────────
-  // 🔷 API функции (замените на реальные запросы)
+  // 🔷 API функции (используем реальные из lib)
   // ─────────────────────────────────────────────────────────────
   
-  const API_BASE = import.meta.env.VITE_API_URL || '/api';
+  import {
+    fetchAllProjects as fetchProjectsFromLib,
+    fetchProject as fetchProjectFromLib,
+    createProject as createProjectFromLib,
+    updateProject as updateProjectFromLib,
+    deleteProject as deleteProjectFromLib,
+  } from '../lib/projects';
   
-  export const fetchAllProjects = async (): Promise<Project[]> => {
-    const response = await fetch(`${API_BASE}/projects`);
-    if (!response.ok) throw new Error('Не удалось загрузить проекты');
-    return response.json();
-  };
-  
-  export const fetchProjectById = async (id: string): Promise<Project | null> => {
-    const response = await fetch(`${API_BASE}/projects/${id}`);
-    if (!response.ok) {
-      if (response.status === 404) return null;
-      throw new Error('Не удалось загрузить проект');
-    }
-    return response.json();
-  };
-  
-  export const createProject = async (project: Partial<Project>): Promise<Project> => {
-    const response = await fetch(`${API_BASE}/projects`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(project),
-    });
-    if (!response.ok) throw new Error('Не удалось создать проект');
-    return response.json();
-  };
-  
-  export const updateProject = async (
-    id: string,
-    updates: Partial<Project>
-  ): Promise<Project> => {
-    const response = await fetch(`${API_BASE}/projects/${id}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(updates),
-    });
-    if (!response.ok) throw new Error('Не удалось обновить проект');
-    return response.json();
-  };
-  
-  export const deleteProject = async (id: string): Promise<void> => {
-    const response = await fetch(`${API_BASE}/projects/${id}`, {
-      method: 'DELETE',
-    });
-    if (!response.ok) throw new Error('Не удалось удалить проект');
-  };
+  // Обёртки для совместимости
+  export const fetchAllProjects = fetchProjectsFromLib;
+  export const fetchProjectById = fetchProjectFromLib;
+  export const createProject = createProjectFromLib;
+  export const updateProject = updateProjectFromLib;
+  export const deleteProject = deleteProjectFromLib;
   
   // ─────────────────────────────────────────────────────────────
   // 🔷 Context и типы
@@ -207,20 +146,19 @@ import React, {
       setIsSaving(true);
       setError(null);
       try {
-        const newProject = await createProject({
-          ...data,
-          meta: {
-            id: crypto.randomUUID(),
-            title: data.meta?.title || 'Новый проект',
-            description: data.meta?.description || '',
-            category: data.meta?.category || 'general',
-            status: data.meta?.status || 'pending',
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-            ...data.meta,
-          } as ProjectMeta,
-          content: data.content || '',
-        });
+        const projectData = {
+          ...data.meta,
+          title: data.meta?.title || 'Новый проект',
+          description: data.meta?.description || '',
+          category: data.meta?.category || 'general',
+          status: data.meta?.status || 'pending',
+          tags: data.meta?.tags || [],
+          images: data.meta?.images || [],
+          collaborators: data.meta?.collaborators || [],
+          techStack: data.meta?.techStack || [],
+        };
+        
+        const newProject = await createProjectFromLib(projectData, data.content || '');
         
         setProjects(prev => [newProject, ...prev]);
         return newProject;
@@ -242,12 +180,9 @@ import React, {
       setIsSaving(true);
       setError(null);
       try {
-        const updated = await updateProject(id, {
-          ...updates,
-          meta: updates.meta ? {
-            ...updates.meta,
-            updatedAt: new Date().toISOString(),
-          } : undefined,
+        const updated = await updateProjectFromLib(id, {
+          ...updates.meta,
+          updatedAt: new Date().toISOString(),
         });
         
         setProjects(prev => 
@@ -271,7 +206,11 @@ import React, {
     const removeProject = useCallback(async (id: string): Promise<void> => {
       setError(null);
       try {
-        await deleteProject(id);
+        const project = projects.find(p => p.meta.id === id);
+        if (!project?.sha) {
+          throw new Error('SHA не найден для проекта');
+        }
+        await deleteProjectFromLib(id, project.sha);
         setProjects(prev => prev.filter(p => p.meta.id !== id));
         if (currentProject?.meta.id === id) {
           setCurrentProject(null);
@@ -280,7 +219,7 @@ import React, {
         setError(err.message || 'Не удалось удалить проект');
         throw err;
       }
-    }, [currentProject]);
+    }, [currentProject, projects]);
   
     // ─────────────────────────────────────────────────────────
     // 🔹 Фильтрация и сортировка проектов

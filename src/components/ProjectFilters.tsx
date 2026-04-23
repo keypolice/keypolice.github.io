@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useProjects } from '../store/projectStore';
 import { Search, SlidersHorizontal, X } from 'lucide-react';
 
-export const ProjectFilters = () => {
+export const ProjectFilters = memo(() => {
   const { filters, setFilters, getUniqueCategories, getUniqueTags } = useProjects();
   
   const categories = getUniqueCategories();
@@ -166,4 +166,4 @@ export const ProjectFilters = () => {
       )}
     </div>
   );
-};
+});
