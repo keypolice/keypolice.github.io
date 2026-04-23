@@ -45,7 +45,7 @@ export const Projects = () => {
           
           <div className="flex items-center gap-3">
             <span className="text-sm text-muted-foreground hidden sm:inline">
-              Найдено: <span className="font-semibold text-foreground">{filteredProjects.length}</span>
+              Найдено проектов: {filteredProjects.length} <span className="hidden font-semibold text-foreground">{filteredProjects.length}</span>
             </span>
             
             {isAdmin && (
