@@ -33,6 +33,13 @@ export const ProjectDetail = () => {
   const [lightboxIndex, setLightboxIndex] = useState(0);
   
   const project = projects.find(p => p.meta.id === id);
+  const { meta, content } = project || { meta: {} as any, content: '' };
+
+  // Normalize arrays
+  const images = Array.isArray(meta.images) ? meta.images : meta.images ? [meta.images] : [];
+  const tags = Array.isArray(meta.tags) ? meta.tags : meta.tags ? [meta.tags] : [];
+  const collaborators = Array.isArray(meta.collaborators) ? meta.collaborators : meta.collaborators ? [meta.collaborators] : [];
+  const techStack = Array.isArray(meta.techStack) ? meta.techStack : meta.techStack ? [meta.techStack] : [];
 
   // Lightbox handlers
   const openLightbox = (index: number) => {
@@ -112,14 +119,6 @@ export const ProjectDetail = () => {
       </div>
     );
   }
-
-  const { meta, content } = project;
-
-  // Normalize arrays
-  const images = Array.isArray(meta.images) ? meta.images : meta.images ? [meta.images] : [];
-  const tags = Array.isArray(meta.tags) ? meta.tags : meta.tags ? [meta.tags] : [];
-  const collaborators = Array.isArray(meta.collaborators) ? meta.collaborators : meta.collaborators ? [meta.collaborators] : [];
-  const techStack = Array.isArray(meta.techStack) ? meta.techStack : meta.techStack ? [meta.techStack] : [];
 
   return (
     <div className="min-h-screen bg-background">
