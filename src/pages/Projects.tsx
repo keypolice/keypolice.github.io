@@ -37,8 +37,8 @@ export const Projects = () => {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Фриланс KPOL проектов</h1>
-            <p className="text-muted-foreground mt-1">
+            <h1 className="text-3xl font-bold tracking-tight">Галерея проектов</h1>
+            <p className="hidden text-muted-foreground mt-1">
               Исследуйте проекты, фильтруйте по категориям и статусам
             </p>
           </div>
@@ -61,7 +61,7 @@ export const Projects = () => {
             {/* Mobile Filter Toggle */}
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className="md:hidden inline-flex items-center justify-center p-2 text-sm font-medium bg-secondary text-secondary-foreground rounded-lg hover:bg-secondary/80 transition-colors"
+              className="hidden md:hidden inline-flex items-center justify-center p-2 text-sm font-medium bg-secondary text-secondary-foreground rounded-lg hover:bg-secondary/80 transition-colors"
               aria-label={showFilters ? 'Скрыть фильтры' : 'Показать фильтры'}
             >
               {showFilters ? <X className="w-4 h-4" /> : <Filter className="w-4 h-4" />}
@@ -72,7 +72,7 @@ export const Projects = () => {
         <div className="flex flex-col lg:flex-row gap-8">
           {/* Sidebar Filters */}
           <aside
-            className={`w-full lg:w-72 shrink-0 ${showFilters ? 'block' : 'hidden lg:block'}`}
+            className={`hidden w-full lg:w-72 shrink-0 ${showFilters ? 'block' : 'hidden lg:block'}`}
           >
             <div className="sticky top-24 space-y-6">
               <div className="bg-card p-5 rounded-xl border border-border">
