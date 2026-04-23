@@ -18,25 +18,27 @@ import { AdminPanel } from './pages/AdminPanel';
 import { Projects } from './pages/Projects';
 import { ProjectDetail } from './pages/ProjectDetail';
 import { ProjectForm } from './pages/ProjectForm';
+import { ScrollToTop } from './components/ScrollToTop';
 export function App() {
   return (
     <AuthProvider>
       <TaskProvider>
         <ProjectProvider>
         <Router>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/tasks" element={<Tasks />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/projects/:id" element={<ProjectDetail />} />
-            <Route path="/projects/new" element={<ProjectForm />} />
-            <Route path="/roadmap" element={<Roadmap />} />
-            <Route path="/tasks/:id" element={<TaskDetail />} />
-            <Route path="/admin" element={<AdminPanel />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
+          <ScrollToTop />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/tasks" element={<Tasks />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/projects/:id" element={<ProjectDetail />} />
+              <Route path="/projects/new" element={<ProjectForm />} />
+              <Route path="/roadmap" element={<Roadmap />} />
+              <Route path="/tasks/:id" element={<TaskDetail />} />
+              <Route path="/admin" element={<AdminPanel />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
         </Router>
         </ProjectProvider>
       </TaskProvider>
