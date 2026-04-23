@@ -4,5 +4,6 @@ export const GITHUB_CONFIG = {
   REPO: 'base-r',
   USERS_FOLDER: 'users',
   TASKS_FOLDER: 'tasks',
+  PROJECTS_FOLDER: 'projects',
   ADMIN_USERS: ['admin']
 };
